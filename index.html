@@ -3,24 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Audio Visualizer</title>
+    <link rel='stylesheet' href='style.css'>
 </head>
-<style>
-    .visualizer-container {
-        position: absolute;
-        bottom: 450px;
-        right: 0;
-        left: 0;
-        text-align: center;
-    }
-
-    .visualizer-container__bar {
-        display: inline-block;
-        background: blue;
-        margin: 0 2px;
-        width: 25px;
-        text-align: center;
-    }
-</style>
 <body>
 
 <!-- Use to hardcode audio track -->
@@ -38,15 +22,15 @@
 <h1 class="track-title">Audio Visualizer</h1>
 
 <div class="visualizer-container">
-
-    <div id='animation-container'>
-        <div id='animation-bg'></div>
-        <div id='animation-zone-a'></div>
-        <div id='animation-zone-b'></div>
-        <div id='animation-zone-c'></div>
-    </div>
 <!--  Inject audio bars here  -->
 </div>
+<div id='animation-container'>
+    <div id='animation-bg'></div>
+    <div id='animation-zone-a'></div>
+    <div id='animation-zone-b'></div>
+    <div id='animation-zone-c'></div>
+</div>
+
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.13/lottie.min.js'></script>
 <script src='main.js'></script>

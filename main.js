@@ -2,7 +2,7 @@
 
 const init = () => {
   // The number of bars that should be displayed
-  const NBR_OF_BARS = 50;
+  const NBR_OF_BARS = 3;
 
 // Get the audio element tag
   const audio = document.querySelector("audio");
@@ -63,6 +63,9 @@ const init = () => {
       const barHeight = Math.max(4, fd || 0);
       bar.style.height = barHeight + "px";
 
+      animations[i].goToAndStop(normalize(fd), true)
+
+      console.log(normalize(fd))
     }
 
     // At the next animation frame, call ourselves
@@ -91,5 +94,53 @@ input.onchange = function(e){
     URL.revokeObjectURL(this.src);
   }
 }
+const MINVALUE = 0;
+const MAXVALUE = 4;
+const delta = MAXVALUE - MINVALUE
+function normalize(fd){
+  return  delta * fd / 255 + MINVALUE
+}
 
-// init();
+// Init lottie
+
+const bgContainer = document.getElementById('animation-bg');
+const zoneAContainer = document.getElementById('animation-zone-a');
+const zoneBContainer = document.getElementById('animation-zone-b');
+const zoneCContainer = document.getElementById('animation-zone-c');
+
+
+
+const bgAnimation = lottie.loadAnimation({
+  container: bgContainer,
+  renderer: 'svg',
+  loop: false,
+  autoplay: false,
+  path: 'data/test-bg_v.01.json'
+});
+
+const zoneAAnimation = lottie.loadAnimation({
+  container: zoneAContainer,
+  renderer: 'svg',
+  loop: false,
+  autoplay: false,
+  path: 'data/test-zoneA_v.01.json'
+});
+
+const zoneBAnimation = lottie.loadAnimation({
+  container: zoneBContainer,
+  renderer: 'svg',
+  loop: false,
+  autoplay: false,
+  path: 'data/test-zoneB_v.01.json'
+});
+
+const zoneCAnimation = lottie.loadAnimation({
+  container: zoneCContainer,
+  renderer: 'svg',
+  loop: false,
+  autoplay: false,
+  path: 'data/test-zoneC_v.01.json'
+});
+
+
+const animations = [zoneAAnimation, zoneBAnimation, zoneCAnimation];
