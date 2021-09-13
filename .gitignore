@@ -824,8 +824,8 @@ MigrationBackup/
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains,visualstudio,visualstudiocode,webstorm,rider,aspnetcore,dotnetcore,node
 
 # Custom
-.aep
-.mp3
+*.aep
+*.mp3
 
 #env
 .env.*.local
