@@ -1,6 +1,6 @@
 const init = () => {
   // The number of bars that should be displayed
-  const NBR_OF_BARS = 33;
+  const NBR_OF_BLOBS = 33;
 
 // Get the audio element tag
   const audio = document.querySelector("audio");
@@ -21,15 +21,16 @@ const init = () => {
   // Get the analyze frequencies
   const frequencyData = new Uint8Array(analyzer.frequencyBinCount);
 
-  // This function has the task to adjust the bar heights according to the frequency data
-  const renderFrame = () => {
-    bgAnimation.goToAndStop(1, true);
+  // set background animation
+  bgAnimation.goToAndStop(1, true);
 
+  // This function has the task to adjust the blob size according to the frequency data
+  const renderFrame = () => {
     // Update our frequency data array with the latest frequency data
     analyzer.getByteFrequencyData(frequencyData);
 
     // Loop through animation instances
-    for (let i = 0; i < NBR_OF_BARS; i++) {
+    for (let i = 0; i < NBR_OF_BLOBS; i++) {
 
       // Since the frequency data array is 1024 in length, we don't want to fetch
       // the first NBR_OF_BARS of values, but try and grab frequencies over the whole spectrum
@@ -37,8 +38,8 @@ const init = () => {
       // fd is a frequency value between 0 and 255
       const fd = frequencyData[index];
 
-      // Go to specific frame
-      animations[i].goToAndStop(normalize(fd), true)
+      // Scale down value and convert to specific frame (could be fractions).
+      animations[i].goToAndStop(scaleDown(fd), true)
     }
 
     // At the next animation frame, call ourselves
@@ -50,9 +51,10 @@ const init = () => {
   audio.play();
 }
 
+// Get Input element from DOM.
 const input = document.getElementById('upload');
 
-// Play music on upload
+// Play music on upload change.
 input.onchange = function (e) {
   const sound = document.getElementById('audio');
   sound.src = URL.createObjectURL(this.files[0]);
@@ -66,18 +68,18 @@ input.onchange = function (e) {
   }
 }
 
+// Min & Max Constants
+const MINVALUE = 0;
+const MAXVALUE = 10;
+const delta = MAXVALUE - MINVALUE
 /** returns scaled down data between MINVALUE and MAXVALUE
  * @return (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed
  * */
-function normalize(fd) {
+function scaleDown(fd) {
   return delta * fd / 255 + MINVALUE
 }
 
 //************************** LOTTIE STUFF ***********************************/
-
-const MINVALUE = 0;
-const MAXVALUE = 10;
-const delta = MAXVALUE - MINVALUE
 
 // Get lottie container refs.
 const bgContainer = document.getElementById('animation-bg');
