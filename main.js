@@ -33,7 +33,7 @@ const init = () => {
 
       // Since the frequency data array is 1024 in length, we don't want to fetch
       // the first NBR_OF_BARS of values, but try and grab frequencies over the whole spectrum
-      const index = (i + 10) * 2;
+      const index = (i + 30);
       // fd is a frequency value between 0 and 255
       const fd = frequencyData[index];
 
