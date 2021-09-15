@@ -18,7 +18,17 @@ body{
     text-align: center;
 }
 
-#animation-bg, #animation-zone-a, #animation-zone-b, #animation-zone-c {
+#animation-bg,
+#animation-zone-1,
+#animation-zone-2,
+#animation-zone-3,
+#animation-zone-4,
+#animation-zone-5,
+#animation-zone-6,
+#animation-zone-7,
+#animation-zone-8,
+#animation-zone-9,
+#animation-zone-10  {
     position: absolute;
     left: 0;
     right: 0;

@@ -1,8 +1,6 @@
-
-
 const init = () => {
   // The number of bars that should be displayed
-  const NBR_OF_BARS = 3;
+  const NBR_OF_BARS = 10;
 
 // Get the audio element tag
   const audio = document.querySelector("audio");
@@ -20,30 +18,17 @@ const init = () => {
   audioSource.connect(analyzer);
   audioSource.connect(ctx.destination);
 
-  // Print the analyze frequencies
+  // Get the analyze frequencies
   const frequencyData = new Uint8Array(analyzer.frequencyBinCount);
-  analyzer.getByteFrequencyData(frequencyData);
-  console.log("frequencyData", frequencyData);
-
-  // Get the visualizer container
-  const visualizerContainer = document.querySelector(".visualizer-container");
-
-  // Create a set of pre-defined bars
-  for (let i = 0; i < NBR_OF_BARS; i++) {
-
-    const bar = document.createElement("DIV");
-    bar.setAttribute("id", "bar" + i);
-    bar.setAttribute("class", "visualizer-container__bar");
-    visualizerContainer.appendChild(bar);
-
-  }
 
   // This function has the task to adjust the bar heights according to the frequency data
   const renderFrame = () => {
+    bgAnimation.goToAndStop(1, true);
 
     // Update our frequency data array with the latest frequency data
     analyzer.getByteFrequencyData(frequencyData);
 
+    // Loop through animation instances
     for (let i = 0; i < NBR_OF_BARS; i++) {
 
       // Since the frequency data array is 1024 in length, we don't want to fetch
@@ -52,37 +37,23 @@ const init = () => {
       // fd is a frequency value between 0 and 255
       const fd = frequencyData[index];
 
-      // Fetch the bar DIV element
-      const bar = document.querySelector("#bar" + i);
-      if (!bar) {
-        continue;
-      }
-
-      // If fd is undefined, default to 0, then make sure fd is at least 4
-      // This will make make a quiet frequency at least 4px high for visual effects
-      const barHeight = Math.max(4, fd || 0);
-      bar.style.height = barHeight + "px";
-
+      // Go to specific frame
       animations[i].goToAndStop(normalize(fd), true)
-
-      console.log(normalize(fd))
     }
 
     // At the next animation frame, call ourselves
     window.requestAnimationFrame(renderFrame);
-
   }
 
   renderFrame();
-
   audio.volume = 0.25
   audio.play();
-
 }
 
 const input = document.getElementById('upload');
 
-input.onchange = function(e){
+// Play music on upload
+input.onchange = function (e) {
   const sound = document.getElementById('audio');
   sound.src = URL.createObjectURL(this.files[0]);
 
@@ -90,57 +61,124 @@ input.onchange = function(e){
   init();
 
   // don't forget to revoke the blobURI when you don't need it
-  sound.onend = function(e) {
+  sound.onend = function (e) {
     URL.revokeObjectURL(this.src);
   }
 }
-const MINVALUE = 0;
-const MAXVALUE = 4;
-const delta = MAXVALUE - MINVALUE
-function normalize(fd){
-  return  delta * fd / 255 + MINVALUE
+
+/** returns scaled down data between MINVALUE and MAXVALUE
+ * @return (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed
+ * */
+function normalize(fd) {
+  return delta * fd / 255 + MINVALUE
 }
 
-// Init lottie
+//************************** LOTTIE STUFF ***********************************/
 
+const MINVALUE = 0;
+const MAXVALUE = 10;
+const delta = MAXVALUE - MINVALUE
+
+// Get lottie container refs.
 const bgContainer = document.getElementById('animation-bg');
-const zoneAContainer = document.getElementById('animation-zone-a');
-const zoneBContainer = document.getElementById('animation-zone-b');
-const zoneCContainer = document.getElementById('animation-zone-c');
+const blob1Container = document.getElementById('animation-zone-1');
+const blob2Container = document.getElementById('animation-zone-2');
+const blob3Container = document.getElementById('animation-zone-3');
+const blob4Container = document.getElementById('animation-zone-4');
+const blob5Container = document.getElementById('animation-zone-5');
+const blob6Container = document.getElementById('animation-zone-6');
+const blob7Container = document.getElementById('animation-zone-7');
+const blob8Container = document.getElementById('animation-zone-8');
+const blob9Container = document.getElementById('animation-zone-9');
+const blob10Container = document.getElementById('animation-zone-10');
 
 
-
+// Init lottie animations
 const bgAnimation = lottie.loadAnimation({
   container: bgContainer,
   renderer: 'svg',
   loop: false,
   autoplay: false,
-  path: 'data/test-bg_v.01.json'
+  path: 'data/v_01/bg.json'
 });
 
-const zoneAAnimation = lottie.loadAnimation({
-  container: zoneAContainer,
+const blob_1 = lottie.loadAnimation({
+  container: blob1Container,
   renderer: 'svg',
   loop: false,
   autoplay: false,
-  path: 'data/test-zoneA_v.01.json'
+  path: 'data/v_01/blob_1.json'
 });
 
-const zoneBAnimation = lottie.loadAnimation({
-  container: zoneBContainer,
+const blob_2 = lottie.loadAnimation({
+  container: blob2Container,
   renderer: 'svg',
   loop: false,
   autoplay: false,
-  path: 'data/test-zoneB_v.01.json'
+  path: 'data/v_01/blob_2.json'
 });
 
-const zoneCAnimation = lottie.loadAnimation({
-  container: zoneCContainer,
+const blob_3 = lottie.loadAnimation({
+  container: blob3Container,
   renderer: 'svg',
   loop: false,
   autoplay: false,
-  path: 'data/test-zoneC_v.01.json'
+  path: 'data/v_01/blob_3.json'
 });
 
+const blob_4 = lottie.loadAnimation({
+  container: blob4Container,
+  renderer: 'svg',
+  loop: false,
+  autoplay: false,
+  path: 'data/v_01/blob_4.json'
+});
 
-const animations = [zoneAAnimation, zoneBAnimation, zoneCAnimation];
+const blob_5 = lottie.loadAnimation({
+  container: blob5Container,
+  renderer: 'svg',
+  loop: false,
+  autoplay: false,
+  path: 'data/v_01/blob_5.json'
+});
+
+const blob_6 = lottie.loadAnimation({
+  container: blob6Container,
+  renderer: 'svg',
+  loop: false,
+  autoplay: false,
+  path: 'data/v_01/blob_6.json'
+});
+
+const blob_7 = lottie.loadAnimation({
+  container: blob7Container,
+  renderer: 'svg',
+  loop: false,
+  autoplay: false,
+  path: 'data/v_01/blob_7.json'
+});
+
+const blob_8 = lottie.loadAnimation({
+  container: blob8Container,
+  renderer: 'svg',
+  loop: false,
+  autoplay: false,
+  path: 'data/v_01/blob_8.json'
+});
+
+const blob_9 = lottie.loadAnimation({
+  container: blob9Container,
+  renderer: 'svg',
+  loop: false,
+  autoplay: false,
+  path: 'data/v_01/blob_9.json'
+});
+
+const blob_10 = lottie.loadAnimation({
+  container: blob10Container,
+  renderer: 'svg',
+  loop: false,
+  autoplay: false,
+  path: 'data/v_01/blob_10.json'
+});
+const animations = [blob_1, blob_2, blob_3, blob_4, blob_5, blob_6, blob_7, blob_8, blob_9, blob_10];
